@@ -1,0 +1,10 @@
+[
+    {
+        "nombre": "Python",
+        "slug"  : "python"
+    },
+    {
+        "nombre": "Go",
+        "slug": "go"
+    }
+]
