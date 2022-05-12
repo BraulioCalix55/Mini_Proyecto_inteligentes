@@ -1,0 +1,4 @@
+hola que pedos mi 
+compra {
+	nodo(america){}
+	}
