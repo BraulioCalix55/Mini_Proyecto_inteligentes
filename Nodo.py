@@ -1,5 +1,3 @@
-from msilib.schema import Class
-
 
 class Nodo:
     def __init__(self,nombre,pesos,vecinos):

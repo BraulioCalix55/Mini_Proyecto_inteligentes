@@ -6,11 +6,10 @@ class Menu:
     def iniciar():
         print("iniciar")
     def cargar(self):
-        with open('./Nodos.json') as contenido:
-            nodos=json.load(contenido)
-            for nodos in nodos:
-                print (nodos.get("nombre"))
-            
-        
-       
-        
+        with open('./Mapa.json') as contenido:
+            mapa=json.load(contenido)
+            for mapa in mapa:
+                print("----------------------------------")
+                print(mapa.get("nombre"))
+                print (mapa.get("vecinos"))
+                ###HAY QUE CREAR EL OBJETO NODO       
