@@ -1,9 +1,18 @@
 
 class Nodo:
-    def __init__(self,nombre,pesos,vecinos):
-        self.nombre=nombre
-        self.pesos=pesos
-        self.vecinos=vecinos
+    
+    estado:None
+    accion:None
+    padre:None
+    costo:0
+
+
+    def __init__(self,estado,accion,padre,costo):
+        self.estado = estado
+        self.accion = accion
+        self.padre=padre
+        self.costo=costo
+
     def imprimir(self):
-        print(self.nombre , self.peso , self.vecinos)
+        print(self.estado, self.accion , self.padre, self.costo)
         
