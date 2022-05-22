@@ -1,4 +1,6 @@
 from File import File
+from Busqueda import Busqueda
+import sys
 
 def opciones ():
    print("\n\n1MINI PROYECTO #1")
@@ -14,7 +16,9 @@ while(menu):
    opcion=int(input())
    
    if (opcion == 1):
-      m = File.cargar(0)
+      print("\n")
+      File.cargar(sys.argv[1])
+      Busqueda.cargarRutas(sys.argv[2])
    elif(opcion==2):
       print(" BFS")
    elif (opcion==3):

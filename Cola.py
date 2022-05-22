@@ -20,5 +20,5 @@ class Cola:
         self.cola.append(elemento)
 
     def imprimirCola(self):
-        print(self.cola)
+        print(str(self.cola))
 
