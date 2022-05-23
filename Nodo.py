@@ -1,4 +1,4 @@
-class NodoBusqueda:
+class Nodo:
 
     __estado = None
     __padre = None
@@ -32,4 +32,4 @@ class NodoBusqueda:
             recorrido.append(self.__accion)
             return coloniaA.getCostoRuta(lugarB) + self.__padre.rutaEncontrada(ciudad, recorrido)  
         else:
-            return 0          
+            return 0    

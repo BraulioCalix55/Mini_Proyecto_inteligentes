@@ -14,7 +14,5 @@ class Ciudad:
     def addColonia(self, colonia):
         self.__colonias.append(colonia)
     
-    def __str__(self):
-        return "Nombre ciudad: "+self.nombre+" ".join(map(str,self.colonias))
         
         

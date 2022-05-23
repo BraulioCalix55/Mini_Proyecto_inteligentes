@@ -26,6 +26,7 @@ class Colonia:
             rutas[nombreAdj] = distancia
         return Colonia(nombre, rutas)
 
+
     def __str__(self):
         return "\nNombre Colonia:"+self.nombre+"\nRutas: "+ str(self.rutas)
     

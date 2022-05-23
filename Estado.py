@@ -30,8 +30,4 @@ class Estado():
         return nuevaLista
     
     def getColoniasFaltantes(self):
-        return self.__listaColoniasFaltantes
-
-    
-
-    
+        return self.__listaColoniasFaltantes    
