@@ -1,42 +1,64 @@
-from File import File
-from Busqueda import Busqueda
+from Entrega import Entrega
 import sys
+import time
 
-def opciones ():
-   print("\n\n1MINI PROYECTO #1")
-   print("----------------\nBraulio Calix Montesinos--11711133\nDavid Mejia Flores--11811310")
-   print("----------------")       
-   print("1) Cargar Mapa \n2) BFS\n3) Costo Uniforme\n4) A*\n5) Salir")
-   print("Elija una opción")
+def menu():
+    print("-----------------------------------")
+    print("1) BFS")
+    print("2) Busqueda de Costo Uniforme")
+    print("3) A*")
+    print("4) Salir")
+    opcion = int(input("Ingrese la opcion a realizar: "))
+    print("-----------------------------------")
+    return opcion
 
+def leerArchivoProblema(nombreArchivo):
+    with open(nombreArchivo, "r") as archivo:
+        datos = archivo.readlines()
+    return datos
 
-menu=True
-while(menu):
-   opciones()
-   opcion=int(input())
-   
-   if (opcion == 1):
-      print("\n")
-      File.cargar(sys.argv[1])
-      Busqueda.cargarRutas(sys.argv[2])
-   elif(opcion==2):
-      print(" BFS")
-   elif (opcion==3):
-      print("Costo uniforme")
-   elif (opcion==4):
-      print("A*")
-   elif (opcion==5):
-      print("Adios...")
-      menu = False
-      exit()
-   else :
-      print ("Se ingresó una opción incorrecta.")
+def crearEntrega():
+    datosArchivo = leerArchivoProblema(sys.argv[2])
+    lugaresEntregas = []
+    for indice, dato in enumerate(datosArchivo):
+        if indice == 0:
+            ubicacionInicial = dato.strip()
+        elif indice == 1:
+            costoMaximo = float(dato.strip())
+        else:
+            lugaresEntregas.append(dato.strip())
+    return Entrega(ubicacionInicial, lugaresEntregas, costoMaximo)    
 
+def main():
+    print("Mini proyecto Sistemas Inteligentes")
+    print("-----------------------------------")
+    #cargar Archivos
+    servicioEntregas = crearEntrega()
+    servicioEntregas.cargarMapa(sys.argv[1])
+    print("Se cargo el mapa correctamente.")
 
+    opcion = 0
+    while opcion != 4:        
+        opcion = menu()
+        if opcion == 1:
+            timeInicio = time.time()
+            servicioEntregas.BFS()
+            timeFinal = time.time()
+            timeT = timeFinal - timeInicio
+            print("A la busqueda BFS le tomo %s segundos" % (timeT))
+        if opcion == 2:
+            timeInicio = time.time()
+            servicioEntregas.uniformCostSearch()
+            timeFinal = time.time()
+            timeT = timeFinal - timeInicio
+            print("A la busqueda de costo uniforme le tomo %s segundos" % (timeT))
+        elif opcion == 3:
+            timeInicio = time.time()
+            servicioEntregas.aEstrella()
+            timeFinal = time.time()
+            timeT = timeFinal - timeInicio
+            print("A la busqueda A* le tomo %s segundos" % (timeT))
+            
 
-
-
-
-         
-         
-
+if __name__ == "__main__":
+    main()
