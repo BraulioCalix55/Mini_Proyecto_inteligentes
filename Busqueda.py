@@ -7,7 +7,7 @@ import json
 from queue import Queue
 
 
-class Entrega:
+class Busqueda:
 
     coloniaInicial = ""
     lugaresEntregas = []
@@ -20,66 +20,16 @@ class Entrega:
         self.costoMaximo = costoMaximo
 
     def cargarMapa(self, nombreArchivo):
-        # read file
         myJsonFile = open(nombreArchivo, 'r')
         jsonData = myJsonFile.read()
-        # parse
         obj = json.loads(jsonData)
         listaColonias = obj['colonias']
-
-        # se crea la ciudad
         self.ciudad = Ciudad(obj["ciudad"])
         for i in range(len(listaColonias)):
             self.ciudad.addColonia(Colonia.cargarColonia(listaColonias[i]))
 
-   
-    def hacerNodoHijo(self, padre, ruta, costoRuta, esCostoUniforme):
-        nuevaColonia = self.__ciudad.getColonia(ruta)
-        coloniasFaltantes = padre.getEstado().nuevasColoniasFaltantes(ruta)
-        if esCostoUniforme:
-            nuevoCosto = padre.getCostoCamino() + costoRuta
-        else:
-            nuevoCosto = padre.getCostoCamino() + costoRuta + len(coloniasFaltantes)
-        nuevaAccion = padre.getEstado().getNombreColoniaEstado() + " -> " + ruta
-        return NodoBusqueda(Estado(nuevaColonia, coloniasFaltantes), padre, nuevaAccion, nuevoCosto)
 
-    def seEncuentraExplorados(self, explorados, estadoBuscar):
-        for estado in explorados:
-            if estado == estadoBuscar:
-                return True
-        return False
-
-    def aEstrella(self):
-        nodo = self.nodoInicial(False)
-        frontera = ColaPrioridad()
-        frontera.insertar(nodo)
-        explorados = set()
-
-        while True:
-            if frontera.estaVacia():
-                print("No hay ruta disponible\n")
-                return
-            nodo = frontera.pop()
-            #Las colonias vecinas son donde se pueden mover, por lo que son las acciones disponibles
-            if nodo.getEstado().esEstadoMeta(self.__coloniaInicial):
-                self.solucion(nodo)
-                print("Total de nodos explorados ", len(explorados))
-                print("Total de nodos descubiertos ",
-                      len(explorados) + frontera.size())
-                return
-
-            explorados.add(nodo.getEstado())
-            coloniaActual = nodo.getEstado().getColoniaEstado()
-            for ruta in coloniaActual.getRutas().keys():
-                nodoHijo = self.hacerNodoHijo(nodo, ruta, coloniaActual.getRutas()[ruta], False)
-                seEncuentraFrontera = frontera.seEncuentra(nodoHijo)
-                if (not self.seEncuentraExplorados(explorados, nodoHijo.getEstado())) or (seEncuentraFrontera == -1):
-                    frontera.insertar(nodoHijo)
-                elif seEncuentraFrontera != -1:
-                    frontera.intercambiarMejorEstado(
-                        nodoHijo, seEncuentraFrontera)
-
-    def uniformCostSearch(self):
+    def costoUniforme(self):
         nodo = self.nodoInicial(True)
         frontera = ColaPrioridad()
         frontera.insertar(nodo)
@@ -90,7 +40,7 @@ class Entrega:
                 return
             nodo = frontera.pop()
             #Se evalua si el nodo actual es la ruta a donde se quiere llegar
-            if nodo.getEstado().esEstadoMeta(self.__coloniaInicial):
+            if nodo.getEstado().esDestino(self.coloniaInicial):
                 self.solucion(nodo)
                 print("Nodos explorados: ", len(explorados))
                 print("Nodos totales:  ",
@@ -104,7 +54,7 @@ class Entrega:
                     nodo, ruta, coloniaActual.getRutas()[ruta], True)
                 seEncuentraFrontera = frontera.seEncuentra(nodoHijo)
 
-                if (not self.seEncuentraExplorados(explorados, nodoHijo.getEstado())) or (seEncuentraFrontera == -1):
+                if (not self.enExplorados(explorados, nodoHijo.getEstado())) or (seEncuentraFrontera == -1):
                     frontera.insertar(nodoHijo)
                 elif seEncuentraFrontera != -1:
                     frontera.intercambiarMejorEstado(
@@ -121,8 +71,8 @@ class Entrega:
             if frontera.empty():
                 print("No hay ruta disponible\n")
                 return
-            listaVacia = len(nodo.getEstado().getColoniasFaltantes())
-            if nodo.getEstado().esEstadoMeta(self.__coloniaInicial) and listaVacia == 0:
+            listaVacia = len(nodo.getEstado().getColoniasFaltantes()) #Verifica si hay colonias que falta por visitar
+            if nodo.getEstado().esDestino(self.coloniaInicial) and listaVacia == 0:
                 self.solucion(nodo)
                 print("Total de nodos explorados:", len(explorados))
                 print("Total de nodos descubiertos:",
@@ -138,7 +88,7 @@ class Entrega:
                 for elem in list(frontera.queue):
                     if nodoHijo == elem:
                         seEncuentraFrontera = True
-                if (not self.seEncuentraExplorados(explorados, nodoHijo.getEstado())) or (seEncuentraFrontera == -1):
+                if (not self.enExplorados(explorados, nodoHijo.getEstado())) or (seEncuentraFrontera == -1):
                     explorados.add(nodoHijo.getEstado())
                     frontera.put(nodoHijo)
 
@@ -151,8 +101,25 @@ class Entrega:
         if esCostoUniforme:
             return Nodo(Estado(coloniaInicial, self.lugaresEntregas), None, "Inicio -> "+self.coloniaInicial, 0)
         else:
-            return Nodo(Estado(coloniaInicial, self.lugaresEntregas), None, "Inicio -> "+self.coloniaInicial, len(self.__lugaresEntregas))
+            return Nodo(Estado(coloniaInicial, self.lugaresEntregas), None, "Inicio -> "+self.coloniaInicial, len(self.lugaresEntregas))
+  
+    #Crea el nuevo nodo a partir de la información del padre, con sus respectivas rutas, y es adjuntado al padre.
+    def hacerNodoHijo(self, padre, ruta, costoRuta, esCostoUniforme):
+        Colonia = self.ciudad.getColonia(ruta)
+        colFaltantes = padre.getEstado().nuevasColoniasFaltantes(ruta)
+        if esCostoUniforme:
+            nuevoCosto = padre.getCostoCamino() + costoRuta
+        else:
+            nuevoCosto = padre.getCostoCamino() + costoRuta + len(colFaltantes)
+        nuevaAccion = padre.getEstado().getNombreColoniaEstado() + " hacia " + ruta
+        return Nodo(Estado(Colonia, colFaltantes), padre, nuevaAccion, nuevoCosto)
 
+    # Función que busca si el nodo está en los nodos que ya fueron visitados previamente. 
+    def enExplorados(self, explorados, estadoBuscar):
+        for estado in explorados:
+            if estado == estadoBuscar:
+                return True
+        return False
 
     #Si se encuentra una ruta dentro del costo esperado, se imprime los destinos a los cuales llego
     def solucion(self, nodo):
@@ -168,5 +135,4 @@ class Entrega:
             print("Ruta:\n")
             for ruta in recorrido:
                 print(ruta)
-            print("Costo del Recorrido:\n")
-            print(costo)
+            print("Costo del Recorrido: ",costo)

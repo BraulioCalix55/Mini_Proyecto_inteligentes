@@ -1,15 +1,13 @@
-from Entrega import Entrega
+from Busqueda import Busqueda
 import sys
 import time
 
 def menu():
-    print("-----------------------------------")
-    print("1) BFS")
+    print("\n\n1) BFS")
     print("2) Busqueda de Costo Uniforme")
     print("3) A*")
     print("4) Salir")
-    opcion = int(input("Ingrese la opcion a realizar: "))
-    print("-----------------------------------")
+    opcion = int(input("Ingrese una opcion:\n"))
     return opcion
 
 def leerArchivoProblema(nombreArchivo):
@@ -18,46 +16,38 @@ def leerArchivoProblema(nombreArchivo):
     return datos
 
 def crearEntrega():
-    datosArchivo = leerArchivoProblema(sys.argv[2])
-    lugaresEntregas = []
+    datosArchivo = leerArchivoProblema(sys.argv[2]) #El txt de las colonias a visitar
+    entregas = []
     for indice, dato in enumerate(datosArchivo):
         if indice == 0:
-            ubicacionInicial = dato.strip()
+            costoMaximo = float(dato.strip()) #La Primera linea es el costo maximo
         elif indice == 1:
-            costoMaximo = float(dato.strip())
+            ubicacionInicial = dato.strip() # La segunda linea es la colonia del inicio del recorrido
         else:
-            lugaresEntregas.append(dato.strip())
-    return Entrega(ubicacionInicial, lugaresEntregas, costoMaximo)    
+            entregas.append(dato.strip()) # Se cargan las colonias a visitar
+    return Busqueda(ubicacionInicial, entregas, costoMaximo)    
 
 def main():
-    print("Mini proyecto Sistemas Inteligentes")
-    print("-----------------------------------")
-    #cargar Archivos
-    servicioEntregas = crearEntrega()
-    servicioEntregas.cargarMapa(sys.argv[1])
-    print("Se cargo el mapa correctamente.")
+    entrega= crearEntrega()
+    entrega.cargarMapa(sys.argv[1]) #Sys.argvs[1] es el Json del mapa
 
     opcion = 0
     while opcion != 4:        
         opcion = menu()
         if opcion == 1:
             timeInicio = time.time()
-            servicioEntregas.BFS()
+            entrega.BFS()
             timeFinal = time.time()
             timeT = timeFinal - timeInicio
             print("A la busqueda BFS le tomo %s segundos" % (timeT))
         if opcion == 2:
             timeInicio = time.time()
-            servicioEntregas.uniformCostSearch()
+            entrega.costoUniforme()
             timeFinal = time.time()
             timeT = timeFinal - timeInicio
             print("A la busqueda de costo uniforme le tomo %s segundos" % (timeT))
         elif opcion == 3:
-            timeInicio = time.time()
-            servicioEntregas.aEstrella()
-            timeFinal = time.time()
-            timeT = timeFinal - timeInicio
-            print("A la busqueda A* le tomo %s segundos" % (timeT))
+            print("No implementado")
             
 
 if __name__ == "__main__":

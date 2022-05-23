@@ -1,33 +1,32 @@
 class Estado():
     
-    __coloniaEstado = None
-    __listaColoniasFaltantes = []
+    coloniaEstado = None
+    listaColoniasFaltantes = []
     
     def __init__(self, coloniaEstado, listaColoniasFaltantes):
-        self.__coloniaEstado = coloniaEstado
-        self.__listaColoniasFaltantes = listaColoniasFaltantes
+        self.coloniaEstado = coloniaEstado
+        self.listaColoniasFaltantes = listaColoniasFaltantes
     
-    #función que comprueba un estado meta si la colonia actual es la misma que la recibida
-    # y si la lista de colonias faltantes es menor
-    def esEstadoMeta(self, destino):
-        if (self.__coloniaEstado.getNombre() == destino) and (len(self.__listaColoniasFaltantes) == 0):
-            return True
-        return False
-
     def getColoniaEstado(self):
-        return self.__coloniaEstado
+        return self.coloniaEstado
 
     def getNombreColoniaEstado(self):
-        return self.__coloniaEstado.getNombre()
+        return self.coloniaEstado.getNombre()
     
-    #función que remueve la colonia dada si se debe hacer entrega en ella 
-    # y devuelve las que faltan por hacer entregas
+    def getColoniasFaltantes(self):
+        return self.listaColoniasFaltantes  
+    
+   #Funcion que elimina la colonia donde ya se hizo una entrega, y reacomoda la lista con las colonias pendientes.
     def nuevasColoniasFaltantes(self, coloniaRemover):
         nuevaLista = []
-        for colonia in self.__listaColoniasFaltantes:
+        for colonia in self.listaColoniasFaltantes:
             if coloniaRemover != colonia:
                 nuevaLista.append(colonia)
         return nuevaLista
     
-    def getColoniasFaltantes(self):
-        return self.__listaColoniasFaltantes    
+    #Retorna si la colonias que se esta visitando es la colonia de destino, y si no hay colonias pendientes por visitar
+    def esDestino(self, destino):
+        if (self.coloniaEstado.getNombre() == destino) and (len(self.listaColoniasFaltantes) == 0):
+            return True
+        return False
+  

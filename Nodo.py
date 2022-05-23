@@ -1,35 +1,35 @@
 class Nodo:
 
-    __estado = None
-    __padre = None
-    __accion = None
-    __costoCamino = 0
+    estado = None
+    padre = None
+    accion = None
+    costoCamino = 0
 
     def __init__(self, estado, padre, accion, costoCamino):
-        self.__estado = estado
-        self.__padre = padre
-        self.__accion = accion
-        self.__costoCamino = costoCamino    
+        self.estado = estado
+        self.padre = padre
+        self.accion = accion
+        self.costoCamino = costoCamino    
 
     def getCostoCamino(self):
-        return self.__costoCamino
+        return self.costoCamino
 
     def getEstado(self):
-        return self.__estado
+        return self.estado
     
     def getAccion(self):
-        return self.__accion
+        return self.accion
 
     def getPadre(self):
-        return self.__padre
+        return self.padre
 
     #función recursiva que calcula el costo de una ruta (Especial A*) y agrega a la lista enviada las acciones de la ruta encontrada
     def rutaEncontrada(self, ciudad, recorrido):
-        if self.__padre != None:
-            lugarA = self.__padre.getEstado().getNombreColoniaEstado()
-            lugarB = self.__estado.getNombreColoniaEstado()
+        if self.padre != None:
+            lugarA = self.padre.getEstado().getNombreColoniaEstado()
+            lugarB = self.estado.getNombreColoniaEstado()
             coloniaA = ciudad.getColonia(lugarA)
-            recorrido.append(self.__accion)
-            return coloniaA.getCostoRuta(lugarB) + self.__padre.rutaEncontrada(ciudad, recorrido)  
+            recorrido.append(self.accion)
+            return coloniaA.getCostoRuta(lugarB) + self.padre.rutaEncontrada(ciudad, recorrido)  
         else:
             return 0    

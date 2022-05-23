@@ -4,43 +4,44 @@ import queue
 class ColaPrioridad:    
 
     def __init__(self):
-        self.__queue = []        
+        self.queue = []        
 
     def estaVacia(self):
-        return len(self.__queue) == 0
+        return len(self.queue) == 0
+
+    def size(self):
+        return len(self.queue)
 
     def insertar(self, nodoInsertar):
         costoNodo = nodoInsertar.getCostoCamino()
         indice = 0
-        for nodo in self.__queue:
+        for nodo in self.queue:
             if nodo.getCostoCamino() <= costoNodo:
                 indice+=1
             else:
                 break
         if indice == -1:
-            self.__queue.insert(0,nodoInsertar)
+            self.queue.insert(0,nodoInsertar)
         else:
-            self.__queue.insert(indice,nodoInsertar)
+            self.queue.insert(indice,nodoInsertar)
     
     def pop(self):
-        retVal = self.__queue[0]
-        del self.__queue[0]
+        retVal = self.queue[0]
+        del self.queue[0]
         return retVal     
 
-    #función que busca si un estado ya se encuentra dentro de la priority queue y retorna el indice
+    #Busca si el estado ya esta en la cola.
     def seEncuentra(self, nodoBuscar):
-        for i, nodo in enumerate(self.__queue):
+        for i, nodo in enumerate(self.queue):
             if nodoBuscar.getEstado() == nodo.getEstado():
                 return i
         return -1
 
-    #función que intercambia el nodo, si el nodo recibido tiene un menor costo
+    #Intercambio por funcion de costo (el menor)
     def intercambiarMejorEstado(self, nodoComparar, indice):
-        nodoActual = self.__queue[indice]
+        nodoActual = self.queue[indice]
         if nodoActual.getCostoCamino() > nodoComparar.getCostoCamino():
-            del self.__queue[indice]
+            del self.queue[indice]
             self.insertar(nodoComparar)
     
-    #función que retorna el size de la priority queue
-    def size(self):
-        return len(self.__queue)
+

@@ -3,7 +3,7 @@
     "colonias": [
         {
             "nombre": "Cerro Grande",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "La Laguna",
                     "distancia": 3.1
@@ -16,7 +16,7 @@
         },
         {
             "nombre": "La Laguna",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Cerro Grande",
                     "distancia": 3.1
@@ -33,7 +33,7 @@
         },
         {
             "nombre": "El Carrizal",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "La Laguna",
                     "distancia": 1.2
@@ -46,7 +46,7 @@
         },
         {
             "nombre": "Santa Fe",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "La Laguna",
                     "distancia": 1.4
@@ -63,7 +63,7 @@
         },
         {
             "nombre": "Centro America",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "El Carrizal",
                     "distancia": 1.8
@@ -84,7 +84,7 @@
         },
         {
             "nombre": "El Centro",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Cerro Grande",
                     "distancia": 4.0
@@ -105,7 +105,7 @@
         },
         {
             "nombre": "Concepcion",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Morazan",
                     "distancia": 2.3
@@ -130,7 +130,7 @@
         },
         {
             "nombre": "Morazan",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "El Centro",
                     "distancia": 2.3
@@ -151,7 +151,7 @@
         },
         {
             "nombre": "San Felipe",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "21 de Octubre",
                     "distancia": 1.6
@@ -172,7 +172,7 @@
         },
         {
             "nombre": "21 de Octubre",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "San Felipe",
                     "distancia": 1.6
@@ -185,7 +185,7 @@
         },
         {
             "nombre": "San Miguel",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "21 de Octubre",
                     "distancia": 2.0
@@ -198,7 +198,7 @@
         },
         {
             "nombre": "Lomas del Guijarro",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "San Felipe",
                     "distancia": 1.5
@@ -215,7 +215,7 @@
         },
         {
             "nombre": "Florencia Sur",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "San Miguel",
                     "distancia": 4.0
@@ -236,7 +236,7 @@
         },
         {
             "nombre": "El Hato",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Florencia Sur",
                     "distancia": 1.8
@@ -253,7 +253,7 @@
         },
         {
             "nombre": "Kennedy",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "El Hato",
                     "distancia": 3.1
@@ -270,7 +270,7 @@
         },
         {
             "nombre": "Miraflores",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Miramontes",
                     "distancia": 3.5
@@ -303,7 +303,7 @@
         },
         {
             "nombre": "Aleman",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Kennedy",
                     "distancia": 3.0
@@ -320,7 +320,7 @@
         },
         {
             "nombre": "Col. San Jose del Pedregal",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Aleman",
                     "distancia": 2.3
@@ -341,7 +341,7 @@
         },
         {
             "nombre": "Col. 15 de Septiembre",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Col. San Jose del Pedregal",
                     "distancia": 2.4
@@ -354,7 +354,7 @@
         },
         {
             "nombre": "Tiloarque",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Col. San Jose del Pedregal",
                     "distancia": 1.8
@@ -379,7 +379,7 @@
         },
         {
             "nombre": "El Prado",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Concepcion",
                     "distancia": 1.3
@@ -400,7 +400,7 @@
         },
         {
             "nombre": "Miramontes",
-            "adyacentes": [
+            "vecinos": [
                 {
                     "nombre": "Lomas del Guijarro",
                     "distancia": 2.3

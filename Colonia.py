@@ -1,28 +1,27 @@
 class Colonia:
 
-    __nombre = ""
-    __rutas = {}
+    nombre = ""
+    rutas = {}
 
     def __init__(self, nombre, rutas):
-        self.__nombre = nombre
-        self.__rutas = rutas
+        self.nombre = nombre
+        self.rutas = rutas
 
     def getNombre(self):
-        return self.__nombre
+        return self.nombre
 
     def getRutas(self):
-        return self.__rutas
+        return self.rutas
     
     def getCostoRuta(self, destino):
-        return self.__rutas[destino]
+        return self.rutas[destino]
 
-    @staticmethod
     def cargarColonia(colonia):
         rutas = {}
         nombre = colonia["nombre"]
-        for colAdj in colonia["adyacentes"]:
-            nombreAdj = colAdj["nombre"]
+        for colAdj in colonia["vecinos"]:
             distancia = colAdj["distancia"]
+            nombreAdj = colAdj["nombre"]
             rutas[nombreAdj] = distancia
         return Colonia(nombre, rutas)
 
